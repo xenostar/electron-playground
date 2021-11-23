@@ -8,6 +8,8 @@ let mainWindow;
 // Create a new BrowserWindow when `app` is ready
 function createWindow() {
 	mainWindow = new BrowserWindow({
+    x: 100,
+    y: 100,
 		width: 1000,
 		height: 800,
 		webPreferences: {
