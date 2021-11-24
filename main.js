@@ -1,6 +1,6 @@
 // Modules
 const electron = require('electron')
-const { app, BrowserWindow, Menu, screen, Tray } = electron
+const { app, BrowserWindow, ipcMain, Menu, screen, Tray } = electron
 const windowStateKeeper = require('electron-window-state')
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -80,6 +80,15 @@ function createWindow() {
 		mainWindow = null
 	})
 
+	// Sending information to renderer process
+	mainWindow.webContents.on('did-finish-load', e => {
+		mainWindow.webContents.send('mailbox', {
+			from: 'Bryan',
+			email: 'bryan@gmail.com',
+			priority: 1,
+		})
+	})
+
 	// Handle power events from OS
 	electron.powerMonitor.on('suspend', e => {
 		console.log('Saving some data')
@@ -91,6 +100,11 @@ function createWindow() {
 		}
 	})
 }
+
+ipcMain.on('channel1', (e, args) => {
+	console.log(args)
+	e.sender.send('channel1-response', 'Message recieved on channel 1. Thank you!')
+})
 
 // Electron `app` is ready
 app.on('ready', createWindow)
