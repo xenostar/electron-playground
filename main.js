@@ -1,6 +1,6 @@
 // Modules
 const electron = require('electron')
-const { app, BrowserWindow, Menu, Tray } = electron
+const { app, BrowserWindow, Menu, screen, Tray } = electron
 const windowStateKeeper = require('electron-window-state')
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -29,22 +29,26 @@ const createTray = () => {
 
 // Create a new BrowserWindow when `app` is ready
 function createWindow() {
-	// Create the tray menu
+	// Primary display information
+	let primaryDisplay = screen.getPrimaryDisplay()
+
+	// Creating the tray menu
 	createTray()
 
-	// Window State manager
-	let winState = windowStateKeeper({
-		defaultWidth: 1000,
-		defaultHeight: 800,
+	// Configuring window State manager
+	let mainWindowState = windowStateKeeper({
+		defaultWidth: primaryDisplay.bounds.width / 2,
+		defaultHeight: primaryDisplay.bounds.height,
 	})
 
+	// Configure mainWindow
 	mainWindow = new BrowserWindow({
-		height: winState.height,
+		height: mainWindowState.height,
+		width: mainWindowState.width,
 		minHeight: 150,
 		minWidth: 300,
-		width: winState.width,
-		x: winState.x,
-		y: winState.y,
+		x: mainWindowState.x || primaryDisplay.bounds.x,
+		y: mainWindowState.y || primaryDisplay.bounds.y,
 		webPreferences: {
 			// --- !! IMPORTANT !! ---
 			// Disable 'contextIsolation' to allow 'nodeIntegration'
@@ -60,26 +64,27 @@ function createWindow() {
 	// Open DevTools - Remove for PRODUCTION!
 	mainWindow.webContents.openDevTools()
 
+	// Adding menu to application
+	Menu.setApplicationMenu(mainMenu)
+
 	// Adding context menu to application
 	mainWindow.webContents.on('context-menu', e => {
 		contextMenu.popup(mainWindow)
 	})
 
-	// Adding menu to application
-	Menu.setApplicationMenu(mainMenu)
-
 	// Tell winState which window to manage
-	winState.manage(mainWindow)
+	mainWindowState.manage(mainWindow)
 
 	// Listen for window being closed
 	mainWindow.on('closed', () => {
 		mainWindow = null
 	})
 
-	// Handling power events from OS
+	// Handle power events from OS
 	electron.powerMonitor.on('suspend', e => {
 		console.log('Saving some data')
 	})
+
 	electron.powerMonitor.on('resume', e => {
 		if (!mainWindow) {
 			createWindow()
