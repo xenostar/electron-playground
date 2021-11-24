@@ -37,17 +37,50 @@
 			<button onClick="openSplash()">Open Splash.png</button>
 			<button onClick="showSplashFile()">Show Splash.png in folder</button>
 			<button onClick="deleteSplashFile()">Delete Splash.png</button>
+			<button onClick="toPng()">PNG</button>
+			<button onClick="toJpg()">JPG</button>
+			<button onClick="toTag()">Show</button>
 		</div>
 
+		<img src="" id="preview" />
+
 		<script>
-			const { shell, webFrame } = require('electron')
+			const { ipcRenderer, nativeImage, shell, webFrame } = require('electron')
+			const fs = require('fs')
+
+			const splashPath = `${__dirname}/splash.png`
+
+			// nativeImage Examples
+			const splashImage = nativeImage.createFromPath(splashPath)
+
+			const saveToDesktop = async (data, ext) => {
+				let desktopPath = await ipcRenderer.invoke('app-path')
+				fs.writeFile(`${desktopPath}/splash.${ext}`, data, console.log)
+			}
+
+			const toTag = e => {
+				let size = splashImage.getSize()
+				let splashUrl = splashImage
+					.resize({ width: Math.round(size.width / 4), height: Math.round(size.height / 4) })
+					.toDataURL()
+				document.getElementById('preview').src = splashUrl
+			}
+
+			const toPng = e => {
+				let pngSplash = splashImage.toPNG()
+				saveToDesktop(pngSplash, 'png')
+			}
+
+			const toJpg = e => {
+				let jpgSplash = splashImage.toJPEG(100)
+				saveToDesktop(jpgSplash, 'jpg')
+			}
+
+			// Shell Examples
 
 			const showSite = e => {
 				shell.openExternal('https://electronjs.org')
 			}
-
-			const splashPath = `${__dirname}/splash.png`
-
 			const openSplash = e => {
 				shell.openPath(splashPath)
 			}
@@ -60,6 +93,7 @@
 				shell.moveItemToTrash(splashPath)
 			}
 
+			// webFrame Examples
 			const zoomUp = () => {
 				webFrame.setZoomLevel(webFrame.getZoomLevel() + 1)
 			}
@@ -74,6 +108,7 @@
 
 			console.log('Resource Usage', webFrame.getResourceUsage())
 
+			// Window examples
 			let win
 
 			const newWin = () => {

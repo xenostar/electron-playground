@@ -129,6 +129,9 @@ ipcMain.on('channel1', (e, args) => {
 ipcMain.handle('ask-fruit', e => {
 	return askFruitDialog()
 })
+ipcMain.handle('app-path', () => {
+	return app.getPath('desktop')
+})
 
 // Electron `app` is ready
 app.on('ready', createWindow)
