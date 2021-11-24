@@ -27,7 +27,27 @@
 		<h3><a href="#" onClick="closeWin()">Close Window</a></h3>
 		<h3><a href="#" onClick="styleWin()">Bad Fonts</a></h3>
 
+		<button onClick="zoomUp()">Increase Zoom</button>
+		<button onClick="zoomDown()">Decrease Zoom</button>
+		<button onClick="zoomReset()">Reset Zoom</button>
+
 		<script>
+			const { webFrame } = require('electron');
+
+			const zoomUp = () => {
+				webFrame.setZoomLevel(webFrame.getZoomLevel() + 1);
+			}
+
+			const zoomDown = () => {
+				webFrame.setZoomLevel(webFrame.getZoomLevel() - 1);
+			}
+
+			const zoomReset = () => {
+				webFrame.setZoomLevel(1);
+			}
+
+			console.log('Resource Usage', webFrame.getResourceUsage())
+
 			let win
 
 			const newWin = () => {
