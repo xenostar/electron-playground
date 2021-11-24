@@ -21,35 +21,44 @@
 		<h1>Hello Electron!</h1>
 		<p>Build cross-platform desktop apps with JavaScript, HTML, and CSS</p>
 
-		<h3></h3><a href="https://placekitten.com/500/500" target="_blank">Kitten</a></h3>
-
+		<h3><a href="https://placekitten.com/500/500" target="_blank">Kitten</a></h3>
 		<h3><a href="#" onClick="newWin()">New Window</a></h3>
 		<h3><a href="#" onClick="closeWin()">Close Window</a></h3>
 		<h3><a href="#" onClick="styleWin()">Bad Fonts</a></h3>
 
-		<button onClick="zoomUp()">Increase Zoom</button>
-		<button onClick="zoomDown()">Decrease Zoom</button>
-		<button onClick="zoomReset()">Reset Zoom</button>
-
-		<button id="talk">Talk</button>
-
-		<button id="ask">Pick a Fruit</button>
-
-		<button onClick="process.crash()">Crash App</button>
+		<div style="display: flex;flex-direction:column;align-items:flex-start;">
+			<button onClick="zoomUp()">Increase Zoom</button>
+			<button onClick="zoomDown()">Decrease Zoom</button>
+			<button onClick="zoomReset()">Reset Zoom</button>
+			<button id="talk">Talk</button>
+			<button id="ask">Pick a Fruit</button>
+			<button onClick="process.crash()">Crash App</button>
+			<button onClick="showSite()">Launch Electron.js Site</button>
+			<button onClick="openSplash()">Open Splash.png</button>
+		</div>
 
 		<script>
-			const { webFrame } = require('electron');
+			const { shell, webFrame } = require('electron')
+
+			const showSite = e => {
+				shell.openExternal('https://electronjs.org')
+			}
+
+			const openSplash = e => {
+				const splashPath = `${__dirname}/splash.png`
+				shell.openPath(splashPath)
+			}
 
 			const zoomUp = () => {
-				webFrame.setZoomLevel(webFrame.getZoomLevel() + 1);
+				webFrame.setZoomLevel(webFrame.getZoomLevel() + 1)
 			}
 
 			const zoomDown = () => {
-				webFrame.setZoomLevel(webFrame.getZoomLevel() - 1);
+				webFrame.setZoomLevel(webFrame.getZoomLevel() - 1)
 			}
 
 			const zoomReset = () => {
-				webFrame.setZoomLevel(1);
+				webFrame.setZoomLevel(1)
 			}
 
 			console.log('Resource Usage', webFrame.getResourceUsage())
@@ -57,7 +66,11 @@
 			let win
 
 			const newWin = () => {
-				win = window.open('https://www.xenostar.net/', '_blank', 'width=500,height=450,alwaysOnTop=1')
+				win = window.open(
+					'https://www.xenostar.net/',
+					'_blank',
+					'width=500,height=450,alwaysOnTop=1'
+				)
 			}
 
 			const closeWin = () => {
