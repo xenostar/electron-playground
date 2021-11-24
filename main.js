@@ -1,5 +1,5 @@
 // Modules
-const { app, BrowserWindow, webContents } = require('electron');
+const { app, BrowserWindow } = require('electron');
 const windowStateKeeper = require('electron-window-state');
 
 // Keep a global reference of the window object, if you don't, the window will
