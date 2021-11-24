@@ -15,3 +15,9 @@ ipcRenderer.on('channel1-response', (e, args) => {
 ipcRenderer.on('mailbox', (e, args) => {
 	console.log("ipcRenderer.on('mailbox')", args)
 })
+
+document.getElementById('ask').addEventListener('click', () => {
+	ipcRenderer.invoke('ask-fruit').then(answer => {
+		console.log('answer', answer)
+	})
+})

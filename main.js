@@ -1,6 +1,6 @@
 // Modules
 const electron = require('electron')
-const { app, BrowserWindow, ipcMain, Menu, screen, Tray } = electron
+const { app, BrowserWindow, dialog, ipcMain, Menu, screen, Tray } = electron
 const windowStateKeeper = require('electron-window-state')
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -25,6 +25,17 @@ const createTray = () => {
 	// })
 
 	tray.setContextMenu(trayMenu)
+}
+
+const askFruitDialog = async () => {
+	let fruits = ['Apple', 'Orange', 'Grape']
+
+	let choice = await dialog.showMessageBox({
+		message: 'Pick a fruit',
+		buttons: fruits,
+	})
+
+	return fruits[choice.response]
 }
 
 // Create a new BrowserWindow when `app` is ready
@@ -89,11 +100,10 @@ function createWindow() {
 		})
 	})
 
-	// Handle power events from OS
+	// Handle powerMonitor events from OS
 	electron.powerMonitor.on('suspend', e => {
 		console.log('Saving some data')
 	})
-
 	electron.powerMonitor.on('resume', e => {
 		if (!mainWindow) {
 			createWindow()
@@ -101,9 +111,13 @@ function createWindow() {
 	})
 }
 
+// IPC Examples
 ipcMain.on('channel1', (e, args) => {
 	console.log(args)
 	e.sender.send('channel1-response', 'Message recieved on channel 1. Thank you!')
+})
+ipcMain.handle('ask-fruit', e => {
+	return askFruitDialog()
 })
 
 // Electron `app` is ready
