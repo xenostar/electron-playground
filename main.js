@@ -1,5 +1,6 @@
 // Modules
-const { app, BrowserWindow, Menu, Tray } = require('electron')
+const electron = require('electron')
+const { app, BrowserWindow, Menu, Tray } = electron
 const windowStateKeeper = require('electron-window-state')
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -73,6 +74,16 @@ function createWindow() {
 	// Listen for window being closed
 	mainWindow.on('closed', () => {
 		mainWindow = null
+	})
+
+	// Handling power events from OS
+	electron.powerMonitor.on('suspend', e => {
+		console.log('Saving some data')
+	})
+	electron.powerMonitor.on('resume', e => {
+		if (!mainWindow) {
+			createWindow()
+		}
 	})
 }
 
