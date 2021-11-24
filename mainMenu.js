@@ -1,25 +1,25 @@
 module.exports = [
-	{
-		label: 'Electron',
-		submenu: [
-			{
-				label: 'Item 1',
-			},
-			{
-				label: 'Item 2',
-				submenu: [
-					{
-						label: 'Sub Item 1',
-					},
-				],
-			},
-			{
-				label: 'Item 3',
-			},
-			{ label: 'Quit App', role: 'quit' },
-		],
-	},
-	// { role: 'appMenu' },
+	// {
+	// 	label: 'Electron',
+	// 	submenu: [
+	// 		{
+	// 			label: 'Item 1',
+	// 		},
+	// 		{
+	// 			label: 'Item 2',
+	// 			submenu: [
+	// 				{
+	// 					label: 'Sub Item 1',
+	// 				},
+	// 			],
+	// 		},
+	// 		{
+	// 			label: 'Item 3',
+	// 		},
+	// 		{ label: 'Quit App', role: 'quit' },
+	// 	],
+	// },
+	{ role: 'appMenu' },
 	// { role: 'fileMenu' },
 	{ role: 'editMenu' },
 	{ role: 'viewMenu' },

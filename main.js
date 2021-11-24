@@ -1,17 +1,36 @@
 // Modules
-const { app, BrowserWindow, Menu } = require('electron')
+const { app, BrowserWindow, Menu, Tray } = require('electron')
 const windowStateKeeper = require('electron-window-state')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
+let mainWindow, tray
 
 // Configuring application menus
 let mainMenu = Menu.buildFromTemplate(require('./mainMenu'))
 let contextMenu = Menu.buildFromTemplate(require('./contextMenu'))
+let trayMenu = Menu.buildFromTemplate(require('./trayMenu'))
+
+const createTray = () => {
+	tray = new Tray('trayTemplate@2x.png')
+	tray.setToolTip('Tray Details')
+
+	// tray.on('click', e => {
+	// 	if (e.shiftKey) {
+	// 		app.quit()
+	// 	} else {
+	// 		mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show()
+	// 	}
+	// })
+
+	tray.setContextMenu(trayMenu)
+}
 
 // Create a new BrowserWindow when `app` is ready
 function createWindow() {
+	// Create the tray menu
+	createTray()
+
 	// Window State manager
 	let winState = windowStateKeeper({
 		defaultWidth: 1000,
