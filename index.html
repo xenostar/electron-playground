@@ -26,7 +26,7 @@
 		<h3><a href="#" onClick="closeWin()">Close Window</a></h3>
 		<h3><a href="#" onClick="styleWin()">Bad Fonts</a></h3>
 
-		<div style="display: flex;flex-direction:column;align-items:flex-start;">
+		<div style="display: flex; flex-direction: column; align-items: flex-start">
 			<button onClick="zoomUp()">Increase Zoom</button>
 			<button onClick="zoomDown()">Decrease Zoom</button>
 			<button onClick="zoomReset()">Reset Zoom</button>
@@ -35,6 +35,8 @@
 			<button onClick="process.crash()">Crash App</button>
 			<button onClick="showSite()">Launch Electron.js Site</button>
 			<button onClick="openSplash()">Open Splash.png</button>
+			<button onClick="showSplashFile()">Show Splash.png in folder</button>
+			<button onClick="deleteSplashFile()">Delete Splash.png</button>
 		</div>
 
 		<script>
@@ -44,9 +46,18 @@
 				shell.openExternal('https://electronjs.org')
 			}
 
+			const splashPath = `${__dirname}/splash.png`
+
 			const openSplash = e => {
-				const splashPath = `${__dirname}/splash.png`
 				shell.openPath(splashPath)
+			}
+
+			const showSplashFile = () => {
+				shell.showItemInFolder(splashPath)
+			}
+
+			const deleteSplashFile = () => {
+				shell.moveItemToTrash(splashPath)
 			}
 
 			const zoomUp = () => {
