@@ -75,6 +75,14 @@ function createWindow() {
 	// Open DevTools - Remove for PRODUCTION!
 	mainWindow.webContents.openDevTools()
 
+	// Crude method to reload crashed app.
+	// Don't use in prod app, but good to remember so we can handle it.
+	mainWindow.webContents.on('crashed', () => {
+		setTimeout(() => {
+			mainWindow.reload()
+		}, 1000)
+	})
+
 	// Adding menu to application
 	Menu.setApplicationMenu(mainMenu)
 
