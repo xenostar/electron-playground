@@ -12,17 +12,42 @@
 				background: #2b2e3b;
 				color: #9feaf9;
 			}
+			a {
+				color: #9feaf9;
+			}
 		</style>
 	</head>
 	<body>
 		<h1>Hello Electron!</h1>
 		<p>Build cross-platform desktop apps with JavaScript, HTML, and CSS</p>
 
-		<a href="https://placekitten.com/500/500" target="_blank"><h3>Kitten</h3></a>
+		<h3></h3><a href="https://placekitten.com/500/500" target="_blank">Kitten</a></h3>
+
+		<h3><a href="#" onClick="newWin()">New Window</a></h3>
+		<h3><a href="#" onClick="closeWin()">Close Window</a></h3>
+		<h3><a href="#" onClick="styleWin()">Bad Fonts</a></h3>
 
 		<script>
+			let win
+
+			const newWin = () => {
+				win = window.open('https://www.xenostar.net/', '_blank', 'width=500,height=450,alwaysOnTop=1')
+			}
+
+			const closeWin = () => {
+				if (win) {
+					win.close()
+				}
+			}
+
+			const styleWin = () => {
+				if (win) {
+					win.eval("document.getElementsByTagName('h1')[0].style.fontFamily = 'Comic Sans MS'")
+				}
+			}
+
 			// You can also require other files to run in this process
-			require('./renderer.js');
+			require('./renderer.js')
 		</script>
 	</body>
 </html>
