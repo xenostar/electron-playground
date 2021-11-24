@@ -101,6 +101,8 @@ function createWindow() {
 	})
 
 	// Handle powerMonitor events from OS
+	// Note that we need to use the destructered import pattern above in order to
+	// use the powerMonitor module. Requiring it directly will cause an error.
 	electron.powerMonitor.on('suspend', e => {
 		console.log('Saving some data')
 	})
