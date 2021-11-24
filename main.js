@@ -6,8 +6,9 @@ const windowStateKeeper = require('electron-window-state')
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-// Configuring application menu
+// Configuring application menus
 let mainMenu = Menu.buildFromTemplate(require('./mainMenu'))
+let contextMenu = Menu.buildFromTemplate(require('./contextMenu'))
 
 // Create a new BrowserWindow when `app` is ready
 function createWindow() {
@@ -38,6 +39,11 @@ function createWindow() {
 
 	// Open DevTools - Remove for PRODUCTION!
 	mainWindow.webContents.openDevTools()
+
+	// Adding context menu to application
+	mainWindow.webContents.on('context-menu', e => {
+		contextMenu.popup(mainWindow)
+	})
 
 	// Adding menu to application
 	Menu.setApplicationMenu(mainMenu)
