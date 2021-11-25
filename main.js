@@ -122,8 +122,6 @@ function createWindow() {
 			createWindow()
 		}
 	})
-
-	console.log(mainWindow.isVisible())
 }
 
 // IPC Examples
