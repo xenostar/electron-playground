@@ -40,17 +40,32 @@
 			<button onClick="toPng()">PNG</button>
 			<button onClick="toJpg()">JPG</button>
 			<button onClick="toTag()">Show</button>
+			<button onClick="makeUpper()">Make Clipboard Uppercase</button>
+			<button onClick="showImage()">Show clipboard image</button>
 		</div>
 
 		<img src="" id="preview" />
+		<img src="" id="cbImage" />
 
 		<script>
-			const { ipcRenderer, nativeImage, shell, webFrame } = require('electron')
+			const { clipboard, pcRenderer, nativeImage, shell, webFrame } = require('electron')
 			const fs = require('fs')
 
-			const splashPath = `${__dirname}/splash.png`
+			// Clipboard Examples
+			console.log(clipboard.readText())
+
+			const makeUpper = e => {
+				let text = clipboard.readText()
+				clipboard.writeText(text.toUpperCase())
+			}
+
+			const showImage = e => {
+				let image = clipboard.readImage()
+				document.getElementById('cbImage').src = image.toDataURL()
+			}
 
 			// nativeImage Examples
+			const splashPath = `${__dirname}/splash.png`
 			const splashImage = nativeImage.createFromPath(splashPath)
 
 			const saveToDesktop = async (data, ext) => {

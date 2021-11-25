@@ -1,6 +1,6 @@
 // Modules
 const electron = require('electron')
-const { app, BrowserWindow, dialog, ipcMain, Menu, screen, Tray } = electron
+const { app, BrowserWindow, clipboard, dialog, ipcMain, Menu, screen, Tray } = electron
 const windowStateKeeper = require('electron-window-state')
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -40,6 +40,9 @@ const askFruitDialog = async () => {
 
 // Create a new BrowserWindow when `app` is ready
 function createWindow() {
+	// Writing to clipboard on app ready as an example
+	clipboard.writeText('Hello from the main process')
+
 	// Primary display information
 	let primaryDisplay = screen.getPrimaryDisplay()
 
