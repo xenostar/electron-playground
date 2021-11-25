@@ -21,6 +21,8 @@
 		<h1>Hello Electron!</h1>
 		<p>Build cross-platform desktop apps with JavaScript, HTML, and CSS</p>
 
+		<h2>App is: <u id="status"></u></h2>
+
 		<h3><a href="https://placekitten.com/500/500" target="_blank">Kitten</a></h3>
 		<h3><a href="#" onClick="newWin()">New Window</a></h3>
 		<h3><a href="#" onClick="closeWin()">Close Window</a></h3>
@@ -48,10 +50,43 @@
 		<img src="" id="cbImage" />
 
 		<script>
-			const { clipboard, pcRenderer, nativeImage, shell, webFrame } = require('electron')
+			const { clipboard, ipcRenderer, nativeImage, shell, webFrame } = require('electron')
 			const fs = require('fs')
 
-			// Clipboard Examples
+			/**
+			 * Notification Example
+			 */
+			setTimeout(() => {
+				let notification = new Notification('Electron App', {
+					body: 'Some notification info',
+				})
+
+				notification.onclick = async e => {
+					// console.log(e)
+					await ipcRenderer.invoke('notification')
+				}
+			}, 2000)
+
+			/**
+			 * Network Detection Example
+			 */
+			const setStatus = status => {
+				const statusNode = document.getElementById('status')
+				statusNode.innerText = status ? 'Online' : 'Offline'
+			}
+
+			setStatus(navigator.onLine)
+
+			window.addEventListener('online', e => {
+				setStatus(true)
+			})
+			window.addEventListener('offline', e => {
+				setStatus(false)
+			})
+
+			/**
+			 * Clipboard Examples
+			 */
 			console.log(clipboard.readText())
 
 			const makeUpper = e => {
@@ -64,7 +99,9 @@
 				document.getElementById('cbImage').src = image.toDataURL()
 			}
 
-			// nativeImage Examples
+			/**
+			 * nativeImage Examples
+			 */
 			const splashPath = `${__dirname}/splash.png`
 			const splashImage = nativeImage.createFromPath(splashPath)
 
@@ -91,8 +128,9 @@
 				saveToDesktop(jpgSplash, 'jpg')
 			}
 
-			// Shell Examples
-
+			/**
+			 * Shell Examples
+			 */
 			const showSite = e => {
 				shell.openExternal('https://electronjs.org')
 			}
@@ -108,7 +146,9 @@
 				shell.moveItemToTrash(splashPath)
 			}
 
-			// webFrame Examples
+			/**
+			 * webFrame Examples
+			 */
 			const zoomUp = () => {
 				webFrame.setZoomLevel(webFrame.getZoomLevel() + 1)
 			}
@@ -123,7 +163,9 @@
 
 			console.log('Resource Usage', webFrame.getResourceUsage())
 
-			// Window examples
+			/**
+			 * Window examples
+			 */
 			let win
 
 			const newWin = () => {

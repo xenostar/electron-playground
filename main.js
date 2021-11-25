@@ -122,6 +122,8 @@ function createWindow() {
 			createWindow()
 		}
 	})
+
+	console.log(mainWindow.isVisible())
 }
 
 // IPC Examples
@@ -134,6 +136,11 @@ ipcMain.handle('ask-fruit', e => {
 })
 ipcMain.handle('app-path', () => {
 	return app.getPath('desktop')
+})
+ipcMain.handle('notification', () => {
+	if (!mainWindow.isVisible()) {
+		mainWindow.show()
+	}
 })
 
 // Electron `app` is ready
