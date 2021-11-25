@@ -74,6 +74,19 @@ function createWindow() {
 		},
 	})
 
+	// Sets a progress bar over the app icon in the app switcher and dock
+	// let progress = 0.01
+	// let progressInterval = setInterval(() => {
+	// 	mainWindow.setProgressBar(progress)
+
+	// 	if (progress <= 1) {
+	// 		progress += 0.01
+	// 	} else {
+	// 		mainWindow.setProgressBar(-1)
+	// 		clearInterval(progressInterval)
+	// 	}
+	// }, 75)
+
 	// Load index.html into the new BrowserWindow
 	mainWindow.loadFile('index.html')
 
