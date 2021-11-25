@@ -2,6 +2,7 @@
 const electron = require('electron')
 const { app, BrowserWindow, clipboard, dialog, ipcMain, Menu, screen, Tray } = electron
 const windowStateKeeper = require('electron-window-state')
+const path = require('path')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -68,7 +69,8 @@ function createWindow() {
 			// Disable 'contextIsolation' to allow 'nodeIntegration'
 			// 'contextIsolation' defaults to "true" as from Electron v12
 			contextIsolation: false,
-			nodeIntegration: true,
+			nodeIntegration: false,
+			preload: path.join(__dirname, 'preload.js'),
 		},
 	})
 
