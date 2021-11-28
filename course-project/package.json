@@ -31,7 +31,7 @@
 	"build": {
 		"appId": "com.xenostar.readit",
 		"copyright": "Copyright xenostar",
-		"public": {
+		"publish": {
 			"provider": "github"
 		},
 		"mac": {
