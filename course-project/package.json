@@ -34,7 +34,10 @@
 			"target": "dmg"
 		},
 		"win": {
-			"target": "zip"
+			"target": "zip",
+			"certificateFile": "private/xenostarelectron.p12",
+			"certificatePassword": "",
+			"verifyUpdateCodeSignature": false
 		},
 		"linux": {
 			"category": "Utility"
