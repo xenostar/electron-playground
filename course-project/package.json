@@ -1,7 +1,7 @@
 {
 	"name": "readit",
 	"version": "1.0.0",
-	"description": "Master Electron Project",
+	"description": "Learning Electron!",
 	"main": "main.js",
 	"scripts": {
 		"start": "electron .",
@@ -11,8 +11,8 @@
 		"release": "electron-builder -m --publish 'onTagOrDraft'",
 		"win-cert": "electron-builder create-self-signed-cert -p xenostar"
 	},
-	"repository": "https://github.com/xenostar/master-electron",
-	"homepage": "https://github.com/xenostar/master-electron",
+	"repository": "https://github.com/xenostar/electron-playground",
+	"homepage": "https://github.com/xenostar/electron-playground",
 	"keywords": [
 		"Electron",
 		"Master Electron",
@@ -26,6 +26,7 @@
 		"nodemon": "^2.0.0"
 	},
 	"dependencies": {
+		"electron-updater": "^4.6.1",
 		"electron-window-state": "^5.0.3"
 	},
 	"build": {
