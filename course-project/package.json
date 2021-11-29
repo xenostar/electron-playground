@@ -23,6 +23,7 @@
 	"devDependencies": {
 		"electron": "^16.0.2",
 		"electron-builder": "^22.14.5",
+		"electron-notarize": "^1.1.1",
 		"nodemon": "^2.0.0"
 	},
 	"dependencies": {
@@ -33,6 +34,7 @@
 	"build": {
 		"appId": "com.xenostar.readit",
 		"copyright": "Copyright xenostar",
+		"afterSign": "build/notarize.js",
 		"publish": {
 			"provider": "github"
 		},
