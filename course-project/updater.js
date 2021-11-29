@@ -3,7 +3,7 @@ const { autoUpdater } = require('electron-updater')
 
 // Configure log debugging
 autoUpdater.logger = require('electron-log')
-autoUpdater.logger.transports.file.level = 'info'
+autoUpdater.logger.transports.file.level = 'info' // error, warn, info, verbose, debug, silly
 
 // Disable auto downloading of updates
 autoUpdater.autoDownload = false
