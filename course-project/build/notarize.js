@@ -12,8 +12,7 @@ exports.default = async function notarizing(context) {
 		return
 	}
 
-	// Same as appId in package.json
-	const appBundleId = 'com.xenostar.readit'
+	const appBundleId = 'com.xenostar.readit' // Same as appId in package.json
 	const appPath = path.join(appOutDir, `${context.packager.appInfo.productFilename}.app`)
 
 	// Check if app exists
