@@ -7,8 +7,8 @@
 		"start": "electron .",
 		"watch": "nodemon --exec electron .",
 		"reset": "git reset --hard",
-		"build": "electron-builder -m",
-		"release": "electron-builder -m --publish 'onTagOrDraft'",
+		"build": "electron-builder -mwl",
+		"release": "electron-builder -mwl --publish 'onTagOrDraft'",
 		"win-cert": "electron-builder create-self-signed-cert -p xenostar"
 	},
 	"repository": "https://github.com/xenostar/electron-playground",

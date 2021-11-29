@@ -22,7 +22,7 @@ ipcMain.on('new-item', (e, itemUrl) => {
 function createWindow () {
 
   // Check for app updates after 3 seconds
-  setTimeout(updater, 3000);
+  setTimeout(updater, 1500);
 
   // Win state keeper
   let state = windowStateKeeper({
